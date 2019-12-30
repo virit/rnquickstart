@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import {createStackNavigator} from "react-navigation-stack";
 import router from "./config/router";
 import {createAppContainer} from "react-navigation";
+import {View} from "react-native";
 
 const models = [];
 
@@ -19,10 +20,12 @@ const AppNavigator = createStackNavigator(router.routeConfigMap, router.stackCon
 
 const store = app._store;
 
+const AppContainer = createAppContainer(AppNavigator);
+
 export default function App() {
   return (
     <Provider store={store}>
-      { createAppContainer(AppNavigator) }
+      <AppContainer/>
     </Provider>
   );
 }
