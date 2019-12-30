@@ -1,19 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {create} from 'dva-core';
+import {Provider} from 'react-redux';
+import {createStackNavigator} from "react-navigation-stack";
+import router from "./config/router";
+import {createAppContainer} from "react-navigation";
+
+const models = [];
+
+const app = create();
+
+models.forEach((o) => {
+  app.model(o);
+});
+
+app.start();
+
+const AppNavigator = createStackNavigator(router.routeConfigMap, router.stackConfig);
+
+const store = app._store;
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <Provider store={store}>
+      { createAppContainer(AppNavigator) }
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
